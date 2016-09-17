@@ -25,7 +25,7 @@ def lobby_route(data):
     elif data['text'] == "/join" or data['text'] == "/join@charge_game_bot":
         join_game(data["chat_id"], data['user_id'], data['user'])
     elif data['text'] == "/remake" or data['text'] == "/remake@charge_game_bot":
-        remake_game(data["chat_id"], data['user_id'], data['user'])
+        remake_game(data["chat_id"])
     else:
         text = 'Unknown command.'
         send_message(chat_id=data['chat_id'], text=text)
@@ -36,6 +36,8 @@ def remake_game(chat_id):
         current_games.remove(find_game(chat_id))
         send_message(chat_id=chat_id, text="Game remade.")
         add_game(chat_id)
+    else:
+        send_message(chat_id=chat_id, text="Game remade.")
 
 def add_game(chat_id):
     global current_games
