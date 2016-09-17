@@ -106,15 +106,14 @@ Each turn, secretly choose a move. Some moves cost mana, which can only be obtai
 
 Charge: Gain 1 mana.
 
-Hadouken (1): A basic attack. Blockable with High Block or Low Block.
+波動拳, Hadouken (1): A basic attack. Blockable with High Block or Low Block.
 Lightning (3): A mid-level attack. Trumps Hadouken, and is blockable only with High Block.
 Earthquake (3): A mid-level attack. Trumps Hadouken, and is blockable only with Low Block.
-Heaven and Earth (5): The strongest attack. Trumps all other attacks, and can't be blocked.
+天地, Heaven and Earth (5): The strongest attack. Trumps all other attacks, and can't be blocked.
 
 High Block: Blocks Hadouken or Lightning.
 Low Block: Blocks Hadouken or Earthquake.
-Reflect (2): Nullify any attack and counterattack (even Heaven and Earth).
-            """
+Reflect (2): Reflect any attack back at your opponent (even Heaven and Earth).            """
             send_message(chat_id=chat_id, text=text)
         else:
             pushDataToDispatcher(data)
