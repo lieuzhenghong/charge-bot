@@ -102,7 +102,7 @@ def handle_message(msg):
 
 Charge is a double-blind battle game for two players. The objective is to hit the other player with an attack and win the game.
 
-Each turn, secretly choose a move. Some moves cost charge, which can only be obtained with the Charge move.
+Each turn, secretly choose a move. Some moves cost mana, which can only be obtained with the Charge move.
 
 Charge: Gain 1 mana.
 
