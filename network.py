@@ -49,9 +49,17 @@ def send_message(**kwargs):
     payload = {}
     for key, value in kwargs.items():
         payload[key] = value
-    print(payload)
     req = requests.post(URL + 'sendMessage', json=payload)
+    return(req.json())
 
+def edit_message(**kwargs):
+    global URL
+    payload = {}
+    for key, value in kwargs.items():
+        payload[key] = value
+    print(payload)
+    req = requests.post(URL + 'editMessageText', json=payload)
+    
 
 def answer_query_callback(id, string):
     global URL
@@ -114,7 +122,7 @@ Earthquake (3): A mid-level attack. Trumps Hadouken, and is blockable only with 
 High Block: Blocks Hadouken or Lightning.
 Low Block: Blocks Hadouken or Earthquake.
 Reflect (2): Reflect any attack back at your opponent (even Heaven and Earth).            """
-            send_message(chat_id=chat_id, text=text)
+            msg = (send_message(chat_id=chat_id, text=text))
         else:
             pushDataToDispatcher(data)
 
@@ -136,7 +144,7 @@ def get_updates(r, *args, **kwargs):
     res = r.json()
     handle_updates(res)
     string = URL + 'getUpdates?offset={0}&timeout={1}'.format(offset,100)
-    print(string)
+    # print(string)
     req = requests.get(string, hooks=dict(response=get_updates))
 
 

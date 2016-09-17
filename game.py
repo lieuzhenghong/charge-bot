@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from charge_keyboard import *
 
 game_config = {
@@ -7,6 +10,7 @@ game_config = {
 }
 
 game_states = []
+scratch_message = ''
 
 def reset_game(game):
     chat_id = game['chat_id']
@@ -74,6 +78,7 @@ def handle_move(data):
     # So we don't have to check if the player is in either player_1 or player_2
     # as we already checked previously.
     global game_states
+    global scratch_message
 
     def find_game_state(chat_id):
         for game in game_states:
@@ -115,8 +120,23 @@ def handle_move(data):
                 # Both players have made their move
                 result = clash(p1_move, p2_move)
                 print (result)
-                text = '{0} moved {1}, {2} moved {3}. {0}: {4} mana. {2}: {5} mana.'.format(p1['name'], 
-                        p1_move, p2['name'], p2_move, p1['mana'], p2['mana'])
+                if (p1_move == 'tiandi' and p2_move == 'tiandi'):
+                    text = """The earth is torn asunder as both players call
+                upon the mighty power of the heavens!!!"""
+                elif (p1_move == 'tiandi'):
+                    text = """天地玄黃 , 宇宙洪荒!!! 
+                {0} moved heaven and earth
+                to destroy {2}, {2} moved {3}.
+                {0}: {4} mana. {2}: {5} mana.""".format(p1['name'], p1_move,
+                    p2['name'], p2_move, p1['mana'], p2['mana'])
+                elif p2_move == 'tiandi':
+                    text = """天地玄黃 , 宇宙洪荒!!! 
+                {2} moved heaven and earth
+                to destroy {0}, {0} moved {1}.
+                {0}: {4} mana. {2}: {5} mana.""".format(p1['name'], p1_move,
+                    p2['name'], p2_move, p1['mana'], p2['mana'])
+                else:
+                    text = """{0} moved {1}, {2} moved {3}. {0}: {4} mana. {2}: {5} mana.""".format(p1['name'], p1_move, p2['name'], p2_move, p1['mana'], p2['mana'])
                 # ans_callback(data['id'], text)
                 # Now I have to reset both moves
                 game['players']['player_1']['current_move'] = None
@@ -166,6 +186,7 @@ PLAYA!".format(data['user']))
 def start_game(data):
     # data is actually a game object
     global game_states
+    global scratch_message
     print(charge_keyboard)
     game_states.append({
         'chat_id': data['chat_id'],
@@ -189,7 +210,7 @@ def start_game(data):
     )
     text = """
     Game started. What action would you like to perform?
-    {0}: {2} mana. {1}: {3} mana.""".format(data['player_names'][0],
+{0}: {2} mana. {1}: {3} mana.""".format(data['player_names'][0],
     data['player_names'][1], 1, 1)
    
     send_message(chat_id=data['chat_id'],text=text,reply_markup=charge_keyboard)

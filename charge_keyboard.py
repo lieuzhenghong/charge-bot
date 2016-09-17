@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*- 
 
-high_block_button = {"text": "High Block", "callback_data": 'high_block'}
+high_block_button = {"text": "High Block", "callback_data": 'high block'}
 lightning_button = {"text": "Lightning (3)", "callback_data": 'lightning'}
 reflect_button = {"text": "Reflect (2)", "callback_data": 'reflect'} 
 hadouken_button ={"text": "波動拳 (1)", "callback_data": 'hadouken'}

@@ -44,10 +44,20 @@ def announcer(**kwargs):
     for key, value in kwargs.items():
         args[key] = value
     reply_markup = args.get('reply_markup', None)
+    edit = args.get('edit', None)
     if reply_markup == None:
-        network.send_message(chat_id=args['chat_id'], text=args['text'])
+        msg = network.send_message(chat_id=args['chat_id'], text=args['text'])
+        return(msg)
     else:
-        network.send_message(chat_id=args['chat_id'], text=args['text'],reply_markup=args['reply_markup'])
+        if edit == None:
+            msg = network.send_message(chat_id=args['chat_id'],
+                    text=args['text'],reply_markup=args['reply_markup'])
+            return(msg)
+        else:
+            msg = network.edit_message(chat_id=args['chat_id'],
+                    text=args['text'],reply_markup=args['reply_markup'],
+                    message_id=args['message_id'])
+            return(msg) 
 
   
 init()
