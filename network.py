@@ -13,9 +13,12 @@ offset = 0
 
 def init():
     read_offset()
+    get_updates()
+    '''
     requests.get(URL +
     'getUpdates?offset={0}&timeout={1}'.format(offset,0),
     hooks=dict(response=get_updates))
+    '''
 
 def setPushDataTo(func):
     global callback
@@ -35,6 +38,7 @@ def read_offset():
         global offset
         dict = json.load(f)
         offset = dict.get('offset')
+    return(offset)
 
 def change_offset(new_offset):
     global offset
@@ -42,7 +46,7 @@ def change_offset(new_offset):
     offset = new_offset
     with open('config.json', 'w') as f:
         json.dump({"offset": offset}, f)
-    read_offset()
+    return(read_offset())
 
 def send_message(**kwargs):
     global URL
@@ -52,14 +56,6 @@ def send_message(**kwargs):
     req = requests.post(URL + 'sendMessage', json=payload)
     return(req.json())
 
-def edit_message(**kwargs):
-    global URL
-    payload = {}
-    for key, value in kwargs.items():
-        payload[key] = value
-    print(payload)
-    req = requests.post(URL + 'editMessageText', json=payload)
-    
 
 def answer_query_callback(id, string):
     global URL
@@ -124,10 +120,11 @@ Each turn, secretly choose a move. Some moves cost mana, which can only be obtai
 *Low Block*: Blocks Hadouken or Earthquake.
 *Reflect* (2): Reflect any attack back at your opponent (even Heaven and Earth).            """
             msg = (send_message(chat_id=chat_id, text=text, parse_mode="Markdown"))
-        else:
+        else: # The message is not something that is in network
             pushDataToDispatcher(data)
 
 def handle_updates(res):
+    res = res.json()
     if res['ok'] and len(res['result']) > 0: # In the case of no message
         res = res['result'] # Strip the boolean ok
         for update in res:
@@ -138,15 +135,12 @@ def handle_updates(res):
             else:
                 handle_query_callback(update)
             change_offset(update['update_id'])
+            print(read_offset())
             # print(msg)
 
-def get_updates(r, *args, **kwargs):
-    global URL
-    res = r.json()
-    handle_updates(res)
-    string = URL + 'getUpdates?offset={0}&timeout={1}'.format(offset,100)
-    # print(string)
-    req = requests.get(string, hooks=dict(response=get_updates))
 
-
-
+def get_updates():
+    while True:
+        string = URL + 'getUpdates?offset={0}&timeout={1}'.format(read_offset(), 3600)
+        req = requests.get(string)
+        handle_updates(req)
