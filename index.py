@@ -10,7 +10,6 @@ import network
 import game
 from charge_keyboard import *
 
-app = Flask(__name__)
 
 def init():
     network.setPushDataTo(dispatcher)
