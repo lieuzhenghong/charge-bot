@@ -237,7 +237,7 @@ moves_mana = [
 # right. The last two columns are filler to convert from base 8 to base 10
 
 move_matchups = [
-        0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 
+        0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 
         -1, 0, 1, 1, 1, 1, 1, 1, 0, 0,
         -1, -1, 0, 0, 0, 1, 1, 1, 0, 0,
         -1, -1, 0, 0, 1, 0, 1, 1, 0, 0,
