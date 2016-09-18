@@ -31,8 +31,8 @@ def read_offset():
     with open ('config.json', 'r') as f: 
         #r+ means read-write, open the file as f
         global offset
-        dict = json.load(f)
-        offset = dict.get('offset')
+        dictionary = json.load(f)
+        offset = dictionary.get('offset')
     return(offset)
 
 def change_offset(new_offset):
@@ -52,10 +52,10 @@ def send_message(**kwargs):
     return(req.json())
 
 
-def answer_query_callback(id, string):
+def answer_query_callback(chat_id, string):
     global URL
     print('answering query callback')
-    send_message(chat_id=id, text=string)
+    send_message(chat_id=chat_id, text=string)
     
 
 def handle_query_callback(update):
