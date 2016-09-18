@@ -19,6 +19,10 @@ def start_game(data):
     lobby_callback_game(data)
 
 def lobby_route(data):
+    """
+    lobby_route handles the commands that come in, and calls functions depending
+    on the action.
+    """
     print(data['text'])
     if data['text'] == "/start" or data['text'] == "/start@charge_game_bot":
         join_game(data['chat_id'], data['user_id'], data['user'])
@@ -63,7 +67,7 @@ def find_game(chat_id):
 def join_game(chat_id, player_id, player):
     global current_games
     game = find_game(chat_id)
-    if game == None:
+    if game is None:
         add_game(chat_id)
         join_game(chat_id, player_id, player)
     elif len(game['current_players']) >= 2:
@@ -78,7 +82,7 @@ def join_game(chat_id, player_id, player):
         game['player_names'].append(player)
         
         text = "{0} joined the game. Current players: {1}".format(game['player_names'][-1], 
-                ' '.join(game['player_names']))
+                                                                  ' '.join(game['player_names']))
         send_message(chat_id=chat_id, text=text)
         if len(game['current_players']) >=2:
             send_message(chat_id=chat_id, text='Game is starting.')
