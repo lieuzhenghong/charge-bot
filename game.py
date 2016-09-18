@@ -14,7 +14,7 @@ scratch_message = ''
 
 def reset_game(game):
     chat_id = game['chat_id']
-    # Need to call remake_game in the lobby. 
+    # Need to call remake_game in the lobby.
     for game in game_states:
         if game['chat_id'] == chat_id:
             game_states.remove(game)
@@ -37,7 +37,7 @@ def answerCallBackTo(fn):
     game_config['ans_callback'] = fn
 
 def ans_callback(a, b):
-    print 'ans_callback called'
+    print('ans_callback called')
     global game_config
     game_config['ans_callback'](a, b)
 
@@ -116,7 +116,7 @@ def handle_move(data):
 
             print(player)
 
-            if (p1_move != None and p2_move != None):
+            if p1_move != None and p2_move != None:
                 # Both players have made their move
                 result = clash(p1_move, p2_move)
                 print (result)

@@ -59,7 +59,7 @@ def answer_query_callback(id, string):
     
 
 def handle_query_callback(update):
-    print update
+    print(update)
     msg = update['callback_query']
     data = msg["data"]
     user = msg["from"]["username"] if \

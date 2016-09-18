@@ -28,7 +28,7 @@ def reset_game_handler(chat_id):
     lobby.remake_game(chat_id)
     
 def query_callback_handler(id, text):
-    print 'query_callback_handler called'
+    print('query_callback_handler called')
     network.answer_query_callback(id, text)
 
 def dispatcher(data):
@@ -54,9 +54,6 @@ def announcer(**kwargs):
                     text=args['text'],reply_markup=args['reply_markup'])
             return(msg)
         else:
-            msg = network.edit_message(chat_id=args['chat_id'],
-                    text=args['text'],reply_markup=args['reply_markup'],
-                    message_id=args['message_id'])
             return(msg) 
 
   
