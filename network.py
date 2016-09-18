@@ -14,11 +14,6 @@ offset = 0
 def init():
     read_offset()
     get_updates()
-    '''
-    requests.get(URL +
-    'getUpdates?offset={0}&timeout={1}'.format(offset,0),
-    hooks=dict(response=get_updates))
-    '''
 
 def setPushDataTo(func):
     global callback
@@ -137,7 +132,6 @@ def handle_updates(res):
             change_offset(update['update_id'])
             print(read_offset())
             # print(msg)
-
 
 def get_updates():
     while True:
