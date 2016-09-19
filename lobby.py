@@ -90,13 +90,14 @@ def join_game(chat_id, player_id, player):
                     "{0} wants to duel!", 
                     "{0} has joined the battle!"
                     ]
+            # This is sending twice, don't know why?'
             text = random.choice(texts).format(game['player_names'][-1])
             send_message(chat_id=chat_id, text=text)
         else:
             text= "{0} has joined. {1} vs {2}".format(game['player_names'][-1],
                                                       game['player_names'][0],
                                                       game['player_names'][1])
-        send_message(chat_id=chat_id, text=text)
+            send_message(chat_id=chat_id, text=text)
         if len(game['current_players']) >=2:
             texts = [
                     "Let battle be joined!",
