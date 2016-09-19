@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """The main file of the Telegram Charge bot."""
 
 import lobby

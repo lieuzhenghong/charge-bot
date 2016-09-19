@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+
+import random
+
 current_games = []
 lobby_callback = None
 lobby_callback_game = None
@@ -55,7 +58,7 @@ def add_game(chat_id):
             'current_players': [],
             'player_names': []
             })
-        text = "A duel has been started. /join to join (2 max)."
+        text = "A game of Charge! has been started. /join to join (2 max)."
     send_message(chat_id=chat_id, text=text)
 
 def find_game(chat_id):
@@ -82,10 +85,24 @@ def join_game(chat_id, player_id, player):
         game['current_players'].append(player_id)
         game['player_names'].append(player)
         
-        text = "{0} joined the game. Current players: {1}".format(game['player_names'][-1], 
-                                                                  ' '.join(game['player_names']))
+        if len(game['current_players']) == 1:
+            texts = [
+                    "{0} wants to duel!", 
+                    "{0} has joined the battle!"
+                    ]
+            text = random.choice(texts).format(game['player_names'][-1])
+            send_message(chat_id=chat_id, text=text)
+        else:
+            text= "{0} has joined. {1} vs {2}".format(game['player_names'][-1],
+                                                      game['player_names'][0],
+                                                      game['player_names'][1])
         send_message(chat_id=chat_id, text=text)
         if len(game['current_players']) >=2:
-            send_message(chat_id=chat_id, text='Game is starting.')
+            texts = [
+                    "Let battle be joined!",
+                    "The battle begins!",
+                    "Time to fight!"
+                    ]
+            send_message(chat_id=chat_id, text=random.choice(texts))
             start_game(game)
 

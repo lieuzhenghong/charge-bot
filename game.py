@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from charge_keyboard import *
+from textwrap import dedent
 
 game_config = {
     'msg_callback':  None,
@@ -118,34 +119,36 @@ def handle_move(data):
                 # Both players have made their move
                 result = clash(p1_move, p2_move)
                 print (result)
-                if (p1_move == 'tiandi' and p2_move == 'tiandi'):
-                    text = """The earth is torn asunder as both players call
-                upon the mighty power of the heavens!!!"""
-                elif (p1_move == 'tiandi'):
-                    text = """天地玄黃 , 宇宙洪荒!!! 
-                {0} moved heaven and earth
-                to destroy {2}, {2} moved {3}.
-                {0}: {4} mana. {2}: {5} mana.""".format(p1['name'], p1_move,
-                    p2['name'], p2_move, p1['mana'], p2['mana'])
-                elif p2_move == 'tiandi':
-                    text = """天地玄黃 , 宇宙洪荒!!! 
-                {2} moved heaven and earth
-                to destroy {0}, {0} moved {1}.
-                {0}: {4} mana. {2}: {5} mana.""".format(p1['name'], p1_move,
-                    p2['name'], p2_move, p1['mana'], p2['mana'])
+                if (p1_move == tian_di_button['callback_data'] and p2_move == tian_di_button['callback_data']):
+                    text = dedent("""The earth is torn asunder as both players call
+                           upon the mighty power of the heavens!!!""")
+                elif p1_move == tian_di_button['callback_data'] and p2_move == reflect_button['callback_data']:
+                   pass 
+                elif p1_move == tian_di_button['callback_data']:
+                    text = dedent("""
+                        天地玄黃 , 宇宙洪荒!!! 
+                        {0} moved heaven and earth to destroy {2}!
+                        {2} moved {3}.
+                        """.format(p1['name'], p1_move, p2['name'], p2_move))
+                elif p2_move == tian_di_button['callback_data']:
+                    text = dedent("""
+                        天地玄黃 , 宇宙洪荒!!! 
+                        {2} moved heaven and earth to destroy {0}! 
+                        {0} moved {1}.
+                        """.format(p1['name'], p1_move, p2['name'], p2_move))
                 else:
-                    text = """
-                    {0} moved {1}. 
-                    {2} moved {3}. 
+                    text = dedent("""
+                    {0} used {1}! 
+                    {2} used {3}! 
                     {0}: {4} mana. 
                     {2}: {5} mana.
-                    """.format(p1['name'], p1_move, p2['name'], p2_move, p1['mana'], p2['mana'])
+                    """.format(p1['name'], p1_move, p2['name'], p2_move, p1['mana'], p2['mana']))
                 # ans_callback(data['id'], text)
                 # Now I have to reset both moves
                 game['players']['player_1']['current_move'] = None
                 game['players']['player_2']['current_move'] = None
                 
-                send_message(chat_id=data['chat_id'], text=text)
+                send_message(chat_id=data['chat_id'], text=text, parse_mode="Markdown")
 
                 if result == 1:
                     game['winner'] = p1['name']
@@ -183,8 +186,7 @@ def game_route(data, lobby):
         # Do the game logic here 
         handle_move(data)
     else:
-        send_message(chat_id=data['chat_id'], text="{0}, YOU AIN'T A \
-PLAYA!".format(data['user']))
+        pass
 
 def start_game(data):
     # data is actually a game object
