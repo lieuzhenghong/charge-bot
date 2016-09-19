@@ -1,1 +1,1 @@
-web: python index.py -p $PORT
+worker: python index.py
