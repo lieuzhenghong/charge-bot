@@ -1,6 +1,4 @@
 """The main file of the Telegram Charge bot."""
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
 import lobby
 import network
