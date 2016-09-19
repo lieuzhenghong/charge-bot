@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 high_block_button = {"text": "High Block", "callback_data": 'high block'}
 lightning_button = {"text": "Lightning (3)", "callback_data": 'lightning'}
 reflect_button = {"text": "Reflect (2)", "callback_data": 'reflect'}

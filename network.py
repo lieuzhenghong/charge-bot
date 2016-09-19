@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from charge_keyboard import *
 import requests
 import json

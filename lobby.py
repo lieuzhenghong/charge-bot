@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 current_games = []
 lobby_callback = None
 lobby_callback_game = None
