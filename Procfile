@@ -1,1 +1,1 @@
-worker: python index.py
+worker: index --log-level=info
