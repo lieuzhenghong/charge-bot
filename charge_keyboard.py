@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-high_block_button = {"text": "\u21AA High Block", "callback_data": '\u21AA High Block'}
+high_block_button = {"text": "⏫ High Block", "callback_data": '⏫ High Block'}
 lightning_button = {"text": "🎇 Lightning (3)", "callback_data": '🎇 Lightning'}
 reflect_button = {"text": "↪️ Reflect (2)", "callback_data": '↪️ Reflect'}
 hadouken_button ={"text": "✴️ 波動拳 (1)", "callback_data": '✴️ Hadouken'}
