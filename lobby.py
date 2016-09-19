@@ -40,17 +40,17 @@ def lobby_route(data):
 
 def remake_game(chat_id):
     global current_games
-    if find_game(chat_id) != None:
+    if find_game(chat_id) is not None:
         current_games.remove(find_game(chat_id))
         send_message(chat_id=chat_id, text="Game remade.")
         add_game(chat_id)
     else:
-        send_message(chat_id=chat_id, text="Game remade.")
+        send_message(chat_id=chat_id, text="No games.")
 
 def add_game(chat_id):
     global current_games
     text = ''
-    if find_game(chat_id) != None:
+    if find_game(chat_id) is not None:
         text = ('A duel already exists. /join to join a duel.')
     else:
         current_games.append({
@@ -79,7 +79,7 @@ def join_game(chat_id, player_id, player):
         text = 'The room is full. Players: {0}, {1}'.format(players[0],players[1])
         send_message(chat_id=chat_id, text=text)
     elif player_id in game['current_players']:
-        text = 'You have already joined. Current players:{0}'.format(' '.join(game['player_names']))
+        text = 'You have already joined. Current players: {0}'.format(' '.join(game['player_names']))
         send_message(chat_id=chat_id, text=text)
     else:
         game['current_players'].append(player_id)

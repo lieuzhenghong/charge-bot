@@ -9,7 +9,6 @@ game_config = {
 }
 
 game_states = []
-scratch_message = ''
 
 def reset_game(game):
     chat_id = game['chat_id']
@@ -94,8 +93,8 @@ def handle_move(data):
     else: 
         player = p2
 
-    if player['current_move'] != None:
-        data['callback'] == None
+    if player['current_move'] is not None:
+        data['callback'] = None
         text = "{0}, you have already moved.".format(player['name'])
         send_message(chat_id=data['chat_id'], text=text)
 
@@ -137,12 +136,14 @@ def handle_move(data):
                         {0} moved {1}.
                         """.format(p1['name'], p1_move, p2['name'], p2_move))
                 else:
-                    text = dedent("""
-                    {0} used {1}! 
-                    {2} used {3}! 
-                    {0}: {4} mana. 
-                    {2}: {5} mana.
-                    """.format(p1['name'], p1_move, p2['name'], p2_move, p1['mana'], p2['mana']))
+                    text = dedent(
+                        """
+                        {0} used {1}! 
+                        {2} used {3}! 
+                        {0}: {4} mana. 
+                        {2}: {5} mana.
+                        """
+                        ).format(p1['name'], p1_move, p2['name'], p2_move, p1['mana'], p2['mana'])
                 # ans_callback(data['id'], text)
                 # Now I have to reset both moves
                 game['players']['player_1']['current_move'] = None
@@ -176,14 +177,10 @@ def game_route(data, lobby):
     print('game route called')
     # Here i need to check that the user clicking is a player
     user = data['user_id']
-    print(user)
-    if lobby == None:
-        print ('ok')
+    if lobby is None:
         return False
-    print(lobby['current_players'])
     # Check that user exists in current_games which is in lobby.py
     if user in lobby['current_players']:
-        # Do the game logic here 
         handle_move(data)
     else:
         pass
@@ -191,7 +188,6 @@ def game_route(data, lobby):
 def start_game(data):
     # data is actually a game object
     global game_states
-    global scratch_message
     print(charge_keyboard)
     game_states.append({
         'chat_id': data['chat_id'],
@@ -213,12 +209,14 @@ def start_game(data):
         'winner': None
         }
     )
-    text = """
-    Game started. What action would you like to perform?
-{0}: {2} mana. {1}: {3} mana.""".format(data['player_names'][0],
-    data['player_names'][1], 1, 1)
+    text = dedent(
+        """
+        Game started. What action would you like to perform? 
+        {0}: {2} mana. {1}: {3} mana.
+        """
+        ).format(data['player_names'][0], data['player_names'][1], 1, 1)
    
-    send_message(chat_id=data['chat_id'],text=text,reply_markup=charge_keyboard)
+    send_message(chat_id=data['chat_id'], text=text, reply_markup=charge_keyboard)
 
 moves = [
         reflect_button['callback_data'],
