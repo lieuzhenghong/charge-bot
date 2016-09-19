@@ -134,7 +134,12 @@ def handle_move(data):
                 {0}: {4} mana. {2}: {5} mana.""".format(p1['name'], p1_move,
                     p2['name'], p2_move, p1['mana'], p2['mana'])
                 else:
-                    text = """{0} moved {1}, {2} moved {3}. {0}: {4} mana. {2}: {5} mana.""".format(p1['name'], p1_move, p2['name'], p2_move, p1['mana'], p2['mana'])
+                    text = """
+                    {0} moved {1}. 
+                    {2} moved {3}. 
+                    {0}: {4} mana. 
+                    {2}: {5} mana.
+                    """.format(p1['name'], p1_move, p2['name'], p2_move, p1['mana'], p2['mana'])
                 # ans_callback(data['id'], text)
                 # Now I have to reset both moves
                 game['players']['player_1']['current_move'] = None
