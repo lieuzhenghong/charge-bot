@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from charge_keyboard import *
 import requests
 import json
 
@@ -63,18 +62,19 @@ def handle_query_callback(update):
     user = msg["from"]["username"] if msg['from'].get('username') else msg['from']['first_name']
     chat_id = msg["message"]["chat"]["id"]
     payload = {
-            'type': 'query_callback',
-            'id': msg['id'],
-            "chat_id": chat_id,
-            'user_id': msg['from']['id'],
-            'user': user,
-            'callback': data
-            }
+        'type': 'query_callback',
+        'id': msg['id'],
+        "chat_id": chat_id,
+        'user_id': msg['from']['id'],
+        'user': user,
+        'callback': data
+        }
     pushDataToDispatcher(payload)
 
 def handle_message(msg):
-
-    if msg.get('text', None) == None:
+    if msg is None: #Handle requests with no message: inline queries for example
+        pass
+    elif msg.get('text', None) is None:
         pass
 
     else:
@@ -84,18 +84,18 @@ def handle_message(msg):
         msg["from"].get("username") else msg["from"]["first_name"]
        
         data = {
-                'type': 'message',
-                'chat_id': msg['chat']['id'],
-                'user_id': msg['from']['id'],
-                'user': user,
-                'text': msg['text']
-                }
+            'type': 'message',
+            'chat_id': msg['chat']['id'],
+            'user_id': msg['from']['id'],
+            'user': user,
+            'text': msg['text']
+            }
 
         if msg['text'] == '/help@charge_game_bot' or msg['text'] == '/help':
             with open ('README.txt', 'r') as file:
-                text=file.read()
+                text = file.read()
             msg = (send_message(chat_id=chat_id, text=text, parse_mode="Markdown"))
-        else: # The message is not something that is in network
+        else: # if message is not something that is in network, pass it to the dispatcher
             pushDataToDispatcher(data)
 
 def handle_updates(res):
